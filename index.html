@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kampfire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f4f7;--sf:#fff;--s2:#eceef3;--tx:#12131a;--mu:#6b7080;--ln:#e4e6ee;--ac:#ff5a36;--ac2:#ff2d78;--sh:0 8px 24px rgba(20,22,40,.07);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0b10;--sf:#14161d;--s2:#1c1f28;--tx:#f3f4f8;--mu:#8a8fa0;--ln:#242732;--sh:0 8px 24px rgba(0,0,0,.4);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a0b10;--sf:#14161d;--s2:#1c1f28;--tx:#f3f4f8;--mu:#8a8fa0;--ln:#242732;--sh:0 8px 24px rgba(0,0,0,.4);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;transition:transform .12s}
+button:active{transform:scale(.96)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.w{max-width:620px;margin:0 auto;padding:18px 16px 130px}
+.hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.mu{color:var(--mu);font-size:13px}
+h1{font-size:24px;line-height:1.2;margin:2px 0 0;font-weight:800;letter-spacing:-.02em}
+h2{font-size:17px;font-weight:800;margin:22px 0 10px;letter-spacing:-.01em}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:16px;box-shadow:var(--sh)}
+.hero{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;gap:16px;border-radius:26px;padding:22px;color:#fff;background:linear-gradient(135deg,#ff5a36,#ff2d78 55%,#7c3aed);box-shadow:0 14px 34px rgba(255,45,120,.28)}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero.off{background:var(--sf);color:var(--tx);box-shadow:var(--sh);border:1px solid var(--ln)}
+.hero.off::after{display:none}
+.eb{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.ht{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin:8px 0 2px}
+.hs{font-size:13px;opacity:.9}
+.ring{position:relative;width:78px;height:78px;flex:none;z-index:1}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg);fill:none;stroke:rgba(255,255,255,.25);stroke-width:6}
+.ring .pg{stroke:#fff;stroke-linecap:round;stroke-dasharray:169.6;transition:stroke-dashoffset 1s}
+.ring div{position:absolute;inset:0;display:grid;place-content:center;text-align:center;line-height:1}
+.ring b{font-size:22px}.ring span{font-size:10px;opacity:.85}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.stat{padding:12px 14px}.stat b{display:block;font-size:20px;font-weight:800}.stat span{font-size:12px;color:var(--mu)}
+.tr{display:flex;gap:12px;margin-bottom:8px}
+.tt{width:54px;flex:none;font-size:12px;color:var(--mu);padding-top:12px;font-variant-numeric:tabular-nums}
+.tc{flex:1;display:flex;flex-direction:column;background:var(--sf);border:1px solid var(--ln);border-left:4px solid var(--c);border-radius:14px;padding:10px 14px}
+.tc span{font-size:12px;color:var(--mu)}
+.tr.now .tc{background:color-mix(in srgb,var(--c) 14%,var(--sf));box-shadow:var(--sh)}
+.tb{margin:0 0 8px 66px;font-size:12px;color:var(--mu)}
+.as{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--ln)}
+.as:first-child{border:0}
+.tag{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;background:color-mix(in srgb,var(--ac) 14%,var(--sf));color:var(--ac);white-space:nowrap}
+.av{--s:40px;width:var(--s);height:var(--s);flex:none;position:relative;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:calc(var(--s)*.42);background:linear-gradient(135deg,hsl(var(--h),80%,60%),hsl(var(--g),80%,42%))}
+.av img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.od{position:absolute;right:-1px;bottom:-1px;width:28%;height:28%;min-width:9px;min-height:9px;border-radius:50%;background:#22c55e;border:2px solid var(--sf)}
+.rb{font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;letter-spacing:.05em;text-transform:uppercase}
+.rOwner{background:linear-gradient(90deg,#ff5a36,#ff2d78);color:#fff}
+.rRep{background:rgba(124,58,237,.16);color:#8b5cf6}
+.rMember{background:var(--s2);color:var(--mu)}
+.post{margin-bottom:12px}
+.pin{border:1.5px solid transparent;background:linear-gradient(var(--sf),var(--sf)) padding-box,linear-gradient(135deg,var(--ac),var(--ac2)) border-box}
+.ph{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ph b{font-weight:700}
+.bd{display:flex;align-items:center;gap:14px;border-radius:20px;padding:16px;margin-bottom:12px;color:#fff;background:radial-gradient(circle,rgba(255,255,255,.4) 0 2px,transparent 3px) 0 0/30px 30px,linear-gradient(135deg,#7c3aed,#ec4899)}
+.bd button{margin-left:auto;border:0;border-radius:99px;background:#fff;color:#7c3aed;font-weight:700;padding:7px 14px;font-size:13px}
+.rxr{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.rx{border:1px solid var(--ln);background:var(--s2);border-radius:99px;padding:3px 10px;font-size:13px}
+.rx.on{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 14%,var(--sf))}
+.msg{display:flex;gap:10px;margin-bottom:14px}
+.msg.me{flex-direction:row-reverse}
+.bub{max-width:80%;background:var(--sf);border:1px solid var(--ln);border-radius:18px 18px 18px 6px;padding:9px 13px}
+.me .bub{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:0;border-radius:18px 18px 6px 18px}
+.me .rx{background:rgba(255,255,255,.2);border-color:transparent;color:#fff}
+.who{font-size:12px;font-weight:700;display:flex;gap:6px;align-items:center;margin-bottom:2px}
+.cin{position:sticky;bottom:96px;display:flex;gap:8px;background:var(--sf);border:1px solid var(--ln);border-radius:99px;padding:6px 6px 6px 18px;box-shadow:var(--sh)}
+.cin input{flex:1;min-width:0;border:0;background:none;font:inherit;color:var(--tx);outline:0}
+.cin button,.btn{border:0;border-radius:99px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;padding:8px 18px;font-weight:700}
+.btn{margin-top:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sc{text-align:left;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:14px;box-shadow:var(--sh)}
+.sc i{font-style:normal;font-weight:800;font-size:13px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 16%,transparent)}
+.lk{background:none;border:0;color:var(--ac);padding:0;margin-bottom:6px;font-weight:700}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--ln)}
+.sw{flex:none;width:46px;height:28px;border-radius:99px;background:var(--s2);position:relative;border:0;transition:.25s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:.25s}
+.sw.on{background:var(--ac)}.sw.on::after{transform:translateX(18px)}
+.cof{display:block;margin:22px auto 0;background:none;border:1px dashed var(--mu);border-radius:99px;padding:7px 16px;color:var(--mu);font-size:13px}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(92%,440px);display:flex;padding:6px;border-radius:26px;background:color-mix(in srgb,var(--sf) 84%,transparent);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid var(--ln);box-shadow:0 12px 32px rgba(0,0,0,.2)}
+nav button{flex:1;position:relative;z-index:1;background:none;border:0;padding:8px 0 6px;color:var(--mu);font-size:10.5px;font-weight:700}
+nav button.on{color:var(--ac)}
+nav svg{width:22px;height:22px;display:block;margin:0 auto 2px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ind{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/5);border-radius:20px;background:color-mix(in srgb,var(--ac) 13%,transparent);transition:transform .4s cubic-bezier(.3,1.3,.5,1)}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+@media (prefers-reduced-motion:no-preference){.go>*{animation:up .5s cubic-bezier(.2,.7,.2,1) both}.go>:nth-child(2){animation-delay:.06s}.go>:nth-child(3){animation-delay:.12s}.go>:nth-child(4){animation-delay:.18s}.go>:nth-child(5){animation-delay:.24s}.sc:hover{transform:translateY(-3px)}.sc{transition:transform .2s}}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg i{position:absolute;width:60vmax;height:60vmax;border-radius:50%;will-change:transform}
+.bg i:nth-child(1){left:-25vmax;top:-25vmax;background:radial-gradient(circle,rgba(255,90,54,.24),transparent 65%);animation:dr 22s ease-in-out infinite alternate}
+.bg i:nth-child(2){right:-30vmax;top:20vh;background:radial-gradient(circle,rgba(124,58,237,.22),transparent 65%);animation:dr 28s ease-in-out infinite alternate-reverse}
+.bg i:nth-child(3){left:-10vmax;bottom:-35vmax;background:radial-gradient(circle,rgba(255,45,120,.18),transparent 65%);animation:dr 25s ease-in-out infinite alternate}
+@keyframes dr{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+#sp{position:fixed;inset:0;z-index:20;display:grid;place-content:center;justify-items:center;gap:14px;background:linear-gradient(135deg,#ff5a36,#ff2d78 55%,#7c3aed);color:#fff;animation:spo 1.75s ease forwards}
+#sp div{width:84px;height:84px;border-radius:26px;background:#fff;color:#ff3d5a;display:grid;place-items:center;animation:pop2 .8s cubic-bezier(.3,1.5,.5,1)}
+#sp svg{width:46px;height:46px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#sp b{font-size:26px;letter-spacing:-.02em;animation:fi .8s .3s both}
+@keyframes spo{0%,70%{opacity:1}100%{opacity:0;visibility:hidden}}
+@keyframes pop2{from{transform:scale(.3) rotate(-25deg);opacity:0}}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}}
+.gt{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2::before{content:"";display:inline-block;width:4px;height:15px;border-radius:2px;background:linear-gradient(var(--ac),var(--ac2));margin-right:9px;vertical-align:-2px}
+.hero::before{content:"";position:absolute;top:0;left:0;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent);transform:translateX(-150%) skewX(-20deg);animation:sh 5s 1.5s ease-in-out infinite}
+.hero.off::before{display:none}
+@keyframes sh{0%,55%{transform:translateX(-150%) skewX(-20deg)}100%{transform:translateX(420%) skewX(-20deg)}}
+.lv{display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;margin-right:7px;animation:pl 1.6s ease-in-out infinite}
+@keyframes pl{50%{transform:scale(1.8);opacity:.4}}
+.tr.now .tc{animation:gl 2.4s ease-in-out infinite}
+@keyframes gl{50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent)}}
+.bd{animation:cf 4s linear infinite}
+@keyframes cf{to{background-position:30px 30px,0 0}}
+.rx.on{animation:pp .35s}
+@keyframes pp{40%{transform:scale(1.25)}}
+nav button.on svg{animation:bn .5s}
+@keyframes bn{40%{transform:translateY(-4px) scale(1.15)}}
+.typ{display:flex;align-items:center;gap:8px;margin:-4px 0 12px}
+.typ span{display:flex;gap:3px;background:var(--sf);border:1px solid var(--ln);border-radius:99px;padding:8px 10px}
+.typ i{width:5px;height:5px;border-radius:50%;background:var(--mu);animation:bo 1.2s infinite}
+.typ i:nth-child(2){animation-delay:.15s}.typ i:nth-child(3){animation-delay:.3s}
+@keyframes bo{30%{transform:translateY(-4px)}}
+.card{transition:transform .2s,box-shadow .2s}
+@media (hover:hover){.card:hover{transform:translateY(-2px)}}
+@media (prefers-reduced-motion:reduce){#sp,.bg{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+#gate{position:fixed;inset:0;z-index:15;display:grid;place-items:center;background:var(--bg);padding:24px;overflow:auto}
+.gc{max-width:380px;width:100%;text-align:center}
+.gc input,#pt{width:100%;border:2px solid var(--ln);background:var(--sf);color:var(--tx);border-radius:14px;padding:11px 14px;font:inherit;margin:6px 0}
+.gc .btn{width:100%;margin:12px 0 0}
+#pt{display:block;resize:vertical}
+</style>
+</head>
+<body>
+<div class="bg"><i></i><i></i><i></i></div>
+<div id="sp"><div><svg viewBox="0 0 24 24"><path d="M12 3c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-10z"/></svg></div><b>Kampfire</b></div>
+<div class="w"><div class="hd" id="hd"></div><main id="v"></main></div>
+<div id="gate"><div class="gc"><div class="mu">Loading</div></div></div>
+<nav id="n"></nav>
+<script>
+const ANCHOR="2026-10-12",HOL=[],UPI="tharunv1557j@oksbi",
+P=[["09:05","09:55"],["09:55","10:45"],["11:00","11:50"],["11:50","12:40"],["13:40","14:30"],["14:30","15:20"],["15:35","16:25"]],
+BR={1:"Break",3:"Lunch",5:"Break"},
+T={1:"EC LAB,EC LAB,HT,CE-I,CODING,APT,PSCP",2:"MC,COMM,MC,PSCP,EC,CE-I,EP",3:"MC,EP,CE-I LAB,CE-I LAB,PSCP LAB,PSCP LAB,EC",4:"PSCP,HT,IDEA LAB,IDEA LAB,EP,CE-I,MC",5:"EP LAB,EP LAB,MC,SPORTS,COMM,EC,COUN",6:"EC LAB,EC LAB,HT,CE-I,CODING,APT,PSCP",7:"MC,COMM,MC,PSCP,EC,CE-I,EP",8:"MC,LIB,CE-I LAB,CE-I LAB,PSCP LAB,PSCP LAB,EC",9:"PSCP,HT,IDEA LAB,IDEA LAB,EP,CE-I,MC",10:"EP LAB,EP LAB,MC,EP,COMM,EC,COUN"},
+SUB={MC:["Matrices and Calculus","Dr. G. Sandhiya","#6366f1"],EP:["Engineering Physics","Dr. K. Valliyammal","#0ea5e9"],EC:["Engineering Chemistry","Mr. M. Sasi","#10b981"],"CE-I":["Communicative English I","Ms. V. Ambika","#f59e0b"],PSCP:["Problem Solving Using C","Ms. G. Sangeetha","#8b5cf6"],HT:["Heritage of Tamils","Dr. M. Vadivel","#ef4444"]};
+const $=i=>document.getElementById(i);
+const st={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const key=x=>x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");
+const add=n=>{const d=new Date();d.setDate(d.getDate()+n);return key(d)};
+const AS=[{s:"MC",x:"Tutorial sheet 2",d:add(1)},{s:"PSCP",x:"Assignment I (Set 1 and Set 2)",d:add(3)}],EXD=add(10);
+const RE=o=>Object.assign({"👍":[0,0],"🔥":[0,0],"😂":[0,0]},o);
+const POSTS=[],MSG=[];
+let tab="home",op=null,an=1,th=st.get("th"),ME={uid:"",name:"",role:"pending",photo:"",hide:false,dob:""},BD=[];
+const E=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])),RL={owner:"Owner",rep:"Rep",member:"Member",pending:"Member"},RK={"👍":"up","🔥":"fire","😂":"laugh"},ok=p=>/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(p||"")?p:"";
+if(th)document.documentElement.dataset.theme=th;
+const mm=x=>{const[h,m]=x.split(":");return h*60+ +m};
+const f=x=>{const[h,m]=x.split(":");return(h%12||12)+":"+m};
+const fd=d=>d.toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"short"});
+const dk=()=>{const t=document.documentElement.dataset.theme;return t?t=="dark":matchMedia("(prefers-color-scheme:dark)").matches};
+const work=x=>x.getDay()%6!==0&&!HOL.includes(key(x));
+function dayOrder(d){if(!work(d))return 0;const a=new Date(ANCHOR+"T00:00"),s=d>=a?1:-1,x=new Date(a);let n=0;while(key(x)!==key(d)){x.setDate(x.getDate()+s);if(work(x))n+=s}return((n%10)+10)%10+1}
+function nw(d){const x=new Date(d);do x.setDate(x.getDate()+1);while(!work(x));return x}
+function rowsFor(o){const r=[],d=T[o].split(",");for(let i=0;i<7;i++){const c=d[i],l=r[r.length-1];if(i&&c.endsWith("LAB")&&l&&l.c===c)l.e=P[i][1];else r.push({c,s:P[i][0],e:P[i][1]});if(BR[i])r.push({c:BR[i],s:P[i][1],e:P[i+1][0],b:1})}return r}
+const info=c=>{const k=c.replace(" LAB",""),s=SUB[k];return s?[s[0]+(c!==k?" Lab":""),s[1],s[2]]:[c,"","#94a3b8"]};
+const av=(n,s,on,ph)=>{const h=[...(n||"?")].reduce((a,c)=>a+c.charCodeAt(0)*7,0)%360;return`<div class="av" style="--s:${s}px;--h:${h};--g:${(h+40)%360}">${ph?`<img src="${ph}" alt="">`:(n||"?")[0]}${on?'<i class="od"></i>':""}</div>`};
+const rb=r=>`<b class="rb r${r}">${r}</b>`;
+const rxh=(k,i,l)=>Object.keys(l.re).map(e=>{const v=l.re[e];return`<button class="rx${v[1]?" on":""}" onclick="rx('${k}',${i},'${e}')">${e}${v[0]?" "+v[0]:""}</button>`}).join("");
+function rx(k,i,e){const a=(k=="p"?POSTS:MSG)[i].re[e];if(a[1]){a[0]--;a[1]=0}else{a[0]++;a[1]=1}if(k=="m")$("ms").innerHTML=msgs();else{an=0;R()}}
+function cf(){if(/Android|iPhone|iPad/i.test(navigator.userAgent))location.href="upi://pay?pa="+UPI+"&pn=Kampfire&cu=INR";else{try{navigator.clipboard.writeText(UPI)}catch(e){}alert("UPI ID copied: "+UPI)}}
+function home(){const t=new Date(),o=dayOrder(t),g=o?t:nw(t),go=o||dayOrder(g),rs=rowsFor(go),n=t.getHours()*60+t.getMinutes(),td=new Date(key(t)+"T00:00");
+const cu=o&&rs.find(r=>!r.b&&mm(r.s)<=n&&n<mm(r.e)),nx=o&&rs.find(r=>!r.b&&mm(r.s)>n),r=cu||nx;let hero;
+if(r){const[nm,sf]=info(r.c),left=cu?mm(r.e)-n:mm(r.s)-n,p=cu?1-left/(mm(r.e)-mm(r.s)):0;
+hero=`<div class="hero"><div><div class="eb">${cu?'<span class="lv"></span>Happening now':"Up next"}</div><div class="ht">${r.c}</div><div class="hs">${nm}${sf?" with "+sf:""}</div><div class="hs">${f(r.s)} to ${f(r.e)}</div></div><div class="ring"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27"/><circle class="pg" cx="32" cy="32" r="27" data-o="${(169.6*(1-p)).toFixed(1)}"/></svg><div><b>${left>=60?Math.floor(left/60)+"h":left}</b><span>${left>=60?left%60+"m":"min"}</span></div></div></div>`}
+else hero=`<div class="hero off"><div><div class="eb" style="color:var(--mu)">${o?"All done":"No classes today"}</div><div class="ht" style="font-size:24px">${o?"Classes are over for today":"Next class day is "+fd(g)}</div></div></div>`;
+const dl=Math.ceil((new Date(EXD+"T00:00")-td)/864e5),as=AS.map(a=>({...a,l:Math.round((new Date(a.d+"T00:00")-td)/864e5)})).filter(a=>a.l>=0).sort((a,b)=>a.l-b.l);
+return hero+`<div class="stats"><div class="card stat"><b>Day ${go}</b><span>${o?"Today":"Next class day"}</span></div><div class="card stat"><b class="cu" data-n="${dl>0?dl:0}">${dl>0?dl:0}</b><span>days to exams</span></div><div class="card stat"><b class="cu" data-n="${as.length}">${as.length}</b><span>due soon</span></div></div>
+<h2>${o?"Today’s schedule":"Schedule for Day "+go}</h2>${rs.map(x=>{if(x.b)return`<div class="tb">${x.c}</div>`;const[nm,sf,c]=info(x.c);return`<div class="tr${cu&&cu===x?" now":""}"><div class="tt">${f(x.s)}</div><div class="tc" style="--c:${c}"><b>${x.c}</b><span>${nm}</span></div></div>`}).join("")}
+<h2>Assignments</h2><div class="card" style="padding:4px 16px">${as.length?as.map(a=>`<div class="as"><div><b>${a.s}</b><div class="mu">${a.x}</div></div><span class="tag">${a.l?a.l==1?"tomorrow":"in "+a.l+" days":"due today"}</span></div>`).join(""):'<div class="as mu">Nothing due. Enjoy the break.</div>'}</div><button class="cof" onclick="cf()">Buy me a coffee</button>`}
+const REPQ=()=>ME.role=="rep"||ME.role=="owner";
+function postsHtml(){return POSTS.length?POSTS.map((p,i)=>`<div class="card post${p.pin?" pin":""}"><div class="ph">${av(p.n,40,p.on,p.ph)}<div><b>${p.n}</b> ${rb(p.r)}<div class="mu">${p.pin?"Pinned, ":""}${p.t}</div></div></div><div>${p.x}</div><div class="rxr">${rxh("p",i,p)}${REPQ()?`<button class="rx" onclick="del('p',${i})">Delete</button>`:""}</div></div>`).join(""):'<div class="card mu">No posts yet.</div>'}
+function bday(){return BD.length?`<div class="bd">${av(BD[0].name,44,1,"")}<div><b>It’s ${BD.map(b=>b.name).join(" and ")}’s birthday today</b><div style="font-size:13px;opacity:.9">Wish them in the class chat</div></div><button onclick="sw('chat')">Say hi</button></div>`:""}
+function wall(){return`<h2 style="margin-top:0">Class wall</h2>${bday()}${REPQ()?'<div class="card" style="margin-bottom:12px"><textarea id="pt" rows="3" maxlength="500" placeholder="Post an announcement"></textarea><label class="mu"><input type="checkbox" id="pn"> Pin to top</label><button class="btn" style="margin-top:8px" onclick="post()">Post</button></div>':""}<div id="pl">${postsHtml()}</div>`}
+function msgs(){return MSG.map((m,i)=>`<div class="msg${m.me?" me":""}">${m.me?"":av(m.n,36,m.on,m.ph)}<div class="bub">${m.me?"":`<div class="who">${m.n} ${rb(m.r)}</div>`}<div>${m.x}</div><div class="rxr">${rxh("m",i,m)}${REPQ()?`<button class="rx" onclick="del('m',${i})">Delete</button>`:""}</div></div></div>`).join("")}
+function chat(){return`<h2 style="margin-top:0">Class chat</h2><div class="mu" style="margin:-6px 0 14px">3 online</div><div id="ms">${msgs()}</div><div class="mu typ"><span><i></i><i></i><i></i></span>Karthik is typing</div><div class="cin"><input id="ci" placeholder="Message the class" autocomplete="off" onkeydown="if(event.key=='Enter')snd()"><button onclick="snd()">Send</button></div>`}
+function snd(){const i=$("ci"),v=i.value.trim();if(!v)return;i.value="";sendMsg(v)}
+function study(){if(op){const[n,s,c]=SUB[op];return`<button class="lk" onclick="op=null;an=1;R()">Back to subjects</button><h1>${n}</h1><div class="mu" style="margin-bottom:14px">${s}</div>`+[1,2,3,4,5].map(i=>`<div class="card" style="margin-bottom:10px"><b>Unit ${i}</b><div class="mu">No materials yet. Your rep can add links here.</div></div>`).join("")}
+return`<h2 style="margin-top:0">Study material</h2><div class="g2">${Object.keys(SUB).map(c=>`<button class="sc" style="--c:${SUB[c][2]}" onclick="op='${c}';an=1;R()"><i>${c.slice(0,2)}</i><div><b>${SUB[c][0]}</b><div class="mu">${SUB[c][1]}</div></div></button>`).join("")}</div>`}
+function tg(){th=dk()?"light":"dark";document.documentElement.dataset.theme=th;st.set("th",th);an=0;R()}
+function me(){return`<div class="card" style="text-align:center;padding:26px"><div style="display:flex;justify-content:center">${av(ME.name,96,!ME.hide,ME.photo)}</div><h1 style="margin-top:12px">${E(ME.name)}</h1><div style="margin-top:8px">${rb(RL[ME.role]||"Member")}</div><button class="btn" onclick="$('pf').click()">Change photo</button><input id="pf" type="file" accept="image/*" hidden onchange="chp(this)"></div><div class="card" style="margin-top:12px;padding:4px 16px"><div class="row" style="border:0"><div><b>Show online status</b><div class="mu">Green dot when you were just active in chat</div></div><button class="sw${ME.hide?"":" on"}" aria-label="Online status" onclick="hid()"></button></div><div class="row"><b>Dark mode</b><button class="sw${dk()?" on":""}" aria-label="Dark mode" onclick="tg()"></button></div></div>${REPQ()?'<div class="card" style="margin-top:12px"><b>Class management</b><div class="mu">Approve new students'+(ME.role=="owner"?' and manage roles':'')+'</div><button class="btn" onclick="ppl(0)">New students</button>'+(ME.role=="owner"?' <button class="btn" onclick="ppl(1)">Everyone</button>':"")+'<div id="pe"></div></div>':""}<button class="cof" onclick="out()">Sign out</button>`}
+function fx(a){document.querySelectorAll(".pg").forEach(e=>{const v=e.dataset.o;if(!a){e.style.strokeDashoffset=v;return}e.style.strokeDashoffset=169.6;setTimeout(()=>{e.style.strokeDashoffset=v},80)});if(!a)return;document.querySelectorAll(".cu").forEach(e=>{const n=+e.dataset.n,s=performance.now();(function s2(t){const p=Math.min((t-s)/800,1);e.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(s2)})(s)})}
+const TABS=[["home","Home"],["wall","Wall"],["chat","Chat"],["study","Study"],["me","Me"]],NI={home:'<path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/>',wall:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18M9 10v10"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',study:'<path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/>',me:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 5-7 8-7s7 2 8 7"/>'};
+$("n").innerHTML='<i class="ind" id="ind"></i>'+TABS.map((x,i)=>`<button id="b${i}" onclick="sw('${x[0]}')"><svg viewBox="0 0 24 24">${NI[x[0]]}</svg>${x[1]}</button>`).join("");
+function sw(t){tab=t;op=null;an=1;R()}
+function R(){const a=an;an=0;const t=new Date(),o=dayOrder(t),h=t.getHours();
+$("hd").innerHTML=`<div><div class="mu">${fd(t)}</div><h1>Good ${h<12?"morning":h<17?"afternoon":"evening"}, <span class="gt">${E((ME.name||"").split(" ")[0])}</span></h1></div><button style="background:none;border:0;padding:0" aria-label="Profile" onclick="sw('me')">${av(ME.name,44,!ME.hide,ME.photo)}</button>`;
+$("v").className=a?"go":"";$("v").innerHTML={home,wall,chat,study,me}[tab]();if(a)[...$("v").children].forEach((c,i)=>c.style.animationDelay=Math.min(i*45,700)+"ms");fx(a);
+TABS.forEach((x,i)=>$("b"+i).classList.toggle("on",x[0]==tab));$("ind").style.transform="translateX("+TABS.findIndex(x=>x[0]==tab)*100+"%)"}
+matchMedia("(prefers-reduced-motion:reduce)").matches?R():setTimeout(R,1000);setTimeout(()=>{const s=$("sp");if(s)s.remove()},1800);setInterval(()=>{if(tab=="home")R()},30000);
+</script>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getAuth,onAuthStateChanged,signInWithPopup,GoogleAuthProvider,signOut}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getFirestore,doc,getDoc,getDocs,setDoc,updateDoc,deleteDoc,addDoc,onSnapshot,collection,query,where,orderBy,limit,serverTimestamp,arrayUnion,arrayRemove}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCepRa2-XklHzhhbM5vYgaPJxl9h6BYfYU",authDomain:"kampfire-a41ea.firebaseapp.com",projectId:"kampfire-a41ea",storageBucket:"kampfire-a41ea.firebasestorage.app",messagingSenderId:"477221341414",appId:"1:477221341414:web:6325cdceae960b68479327"});
+const A=getAuth(app),D=getFirestore(app),$g=document.getElementById("gate"),uref=()=>doc(D,"users",ME.uid);
+let SPIC="",on=0,LA=0;
+const G={login:'<h1>Kampfire</h1><p class="mu">Sign in to join your class.</p><button class="btn" onclick="gIn()">Sign in with Google</button><p class="mu" id="ge"></p>',
+setup:'<h1>Almost there</h1><p class="mu">Choose how your classmates will see you.</p><input type="text" id="gn" maxlength="24" placeholder="Display name"><label class="mu">Birthday (optional, only day and month are shown)</label><input type="date" id="gd"><button class="btn" style="background:var(--s2);color:var(--tx)" onclick="$(\'gf\').click()">Add profile photo (optional)</button><input id="gf" type="file" accept="image/*" hidden onchange="gp(this)"><div class="mu" id="gm"></div><button class="btn" onclick="fin()">Continue</button><p class="mu" id="ge"></p>',
+wait:'<h1>Waiting for approval</h1><p class="mu">A class rep will approve you soon. This page updates by itself.</p><button class="btn" onclick="out()">Sign out</button>'};
+const gate=k=>{if(!k){$g.style.display="none";return}$g.style.display="grid";$g.innerHTML='<div class="gc">'+G[k]+'</div>'};
+const shrink=f=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas");c.width=c.height=96;const m=Math.min(im.width,im.height);c.getContext("2d").drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,96,96);r(c.toDataURL("image/jpeg",.72))};im.src=fr.result};fr.readAsDataURL(f)});
+const ago=t=>{const m=Math.round((Date.now()-t)/6e4);return m<1?"just now":m<60?m+" min ago":m<1440?Math.round(m/60)+" h ago":new Date(t).toLocaleDateString("en-IN",{day:"numeric",month:"short"})};
+const mp=d=>{const x=d.data(),t=x.t?x.t.toMillis():Date.now(),r={};for(const e in RK){const a=(x.re&&x.re[RK[e]])||[];r[e]=[a.length,a.includes(ME.uid)?1:0]}return{id:d.id,n:E(x.name||"?"),r:RL[x.role]||"Member",ph:ok(x.photo),on:!x.hide&&Date.now()-t<3e5,me:x.uid==ME.uid,x:E(x.text||""),t:ago(t),pin:x.pin,re:r}};
+const q=(n,l)=>query(collection(D,n),orderBy("t","desc"),limit(l));
+function start(){if(on)return;on=1;an=1;gate();
+onSnapshot(q("messages",40),s=>{MSG.splice(0,MSG.length,...s.docs.map(mp).reverse());if(tab=="chat"&&$("ms")){$("ms").innerHTML=msgs();scrollTo({top:document.body.scrollHeight,behavior:"smooth"})}},e=>console.error(e));
+onSnapshot(q("posts",30),s=>{POSTS.splice(0,POSTS.length,...s.docs.map(mp).sort((a,b)=>(b.pin?1:0)-(a.pin?1:0)));if(tab=="wall"&&$("pl"))$("pl").innerHTML=postsHtml()},e=>console.error(e));
+const bd=doc(D,"meta","birthdays"),md=String(new Date().getMonth()+1).padStart(2,"0")+"-"+String(new Date().getDate()).padStart(2,"0");
+(ME.dob?setDoc(bd,{[ME.uid]:{name:ME.name,md:ME.dob}},{merge:true}).catch(()=>{}):Promise.resolve()).then(()=>getDoc(bd)).then(s=>{BD.splice(0,BD.length,...Object.values(s.exists()?s.data():{}).filter(b=>b&&b.md==md).map(b=>({name:E(b.name||"?"),photo:""})));if(tab=="wall"){an=0;R()}}).catch(()=>{})}
+onAuthStateChanged(A,u=>{if(!u){gate("login");return}ME.uid=u.uid;
+onSnapshot(uref(),s=>{if(!s.exists()){gate("setup");return}const d=s.data();Object.assign(ME,{name:d.name,role:d.role,photo:ok(d.photo),hide:!!d.hide,dob:d.dob||""});if(d.role=="pending")gate("wait");else{start();R()}},e=>{gate("login");const g=$("ge");if(g)g.textContent="Database error: "+e.code})});
+Object.assign(window,{
+gIn:()=>signInWithPopup(A,new GoogleAuthProvider()).catch(e=>{$("ge").textContent="Sign-in failed: "+e.code}),
+out:()=>signOut(A).then(()=>location.reload()),
+gp:async i=>{if(i.files[0]){SPIC=await shrink(i.files[0]);$("gm").textContent="Photo added"}},
+fin:async()=>{const n=$("gn").value.trim().slice(0,24),d=$("gd").value;if(n.length<2){$("ge").textContent="Please enter a display name.";return}try{await setDoc(uref(),{name:n,role:"pending",photo:SPIC,hide:false,dob:d?d.slice(5):""})}catch(e){$("ge").textContent="Could not save: "+e.code}},
+sendMsg:v=>addDoc(collection(D,"messages"),{uid:ME.uid,name:ME.name,role:ME.role,photo:ME.photo||"",text:v.slice(0,500),t:serverTimestamp(),hide:!!ME.hide,re:{}}).catch(e=>console.error(e)),
+post:async()=>{const v=$("pt").value.trim();if(!v)return;await addDoc(collection(D,"posts"),{uid:ME.uid,name:ME.name,role:ME.role,photo:ME.photo||"",text:v.slice(0,500),t:serverTimestamp(),pin:$("pn").checked,re:{}});$("pt").value=""},
+rx:(k,i,e)=>{const x=(k=="p"?POSTS:MSG)[i];updateDoc(doc(D,k=="p"?"posts":"messages",x.id),{["re."+RK[e]]:x.re[e][1]?arrayRemove(ME.uid):arrayUnion(ME.uid)}).catch(e=>console.error(e))},
+del:(k,i)=>deleteDoc(doc(D,k=="p"?"posts":"messages",(k=="p"?POSTS:MSG)[i].id)),
+hid:()=>updateDoc(uref(),{hide:!ME.hide}),
+chp:async i=>{if(i.files[0])updateDoc(uref(),{photo:await shrink(i.files[0])})},
+ppl:async a=>{LA=a;const s=await getDocs(a?collection(D,"users"):query(collection(D,"users"),where("role","==","pending"))),L=s.docs.map(d=>({id:d.id,...d.data()}));
+$("pe").innerHTML=L.length?L.map(u=>{const b=u.id==ME.uid?"":u.role=="pending"?`<button class="rx" onclick="setRole('${u.id}','member')">Approve</button>`:ME.role=="owner"?(u.role=="member"?`<button class="rx" onclick="setRole('${u.id}','rep')">Make rep</button>`:u.role=="rep"?`<button class="rx" onclick="setRole('${u.id}','member')">Make member</button>`:""):"";return`<div class="row"><div style="display:flex;gap:10px;align-items:center">${av(E(u.name||"?"),34,0,ok(u.photo))}<div><b>${E(u.name||"?")}</b><div class="mu">${RL[u.role]||u.role}</div></div></div><div>${b}</div></div>`}).join(""):'<div class="mu" style="margin-top:10px">Nobody here.</div>'},
+setRole:(id,r)=>updateDoc(doc(D,"users",id),{role:r}).then(()=>ppl(LA))
+});
+</script>
+</body>
+</html>
